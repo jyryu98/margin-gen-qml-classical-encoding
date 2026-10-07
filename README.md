@@ -22,3 +22,5 @@ Trains quantum machine learning models with classical data encoding across a gri
     - `./se_test`: Contains optimization results reported in the paper
 
 - `draw_figures.ipynb`: Draws paper figures from results
+
+- `extra_measures_test.py`: Calculates sign-errors/conditional independence tests for extra complexity measures guided by derived bounds

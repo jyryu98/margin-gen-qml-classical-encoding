@@ -7,11 +7,15 @@ import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
-HYPERPARAMETER_VALUES = {'Embedding': ['AngleEmbedding/RX', 'AngleEmbedding/RY', 'IQPEmbedding/1L', 'IQPEmbedding/2L', 'IQPEmbedding/3L'],
-                         'Ansatz': ['BasicEntanglerLayers/RX', 'BasicEntanglerLayers/RY', 'BasicEntanglerLayers/RZ', 'StronglyEntanglingLayers/1L', 'SimplifiedTwoDesign/1L'],
-                         'Number of ReUps': [2, 4, 6], 'Number of Qubits': [2, 4, 6], 'Batch Size': [32, 64, 128], 'Learning Rate': [0.001, 0.002, 0.005], 'Random Seed': [16, 13, 42]}
-
 def build_model_from_hyperparameter_dict(hyperparameter_dict):
+    """
+    Given a dictionary of hyperparameters, create corresponding torch module
+
+    Args:
+        hyperparameter_dict (dict): Dictionary with keys ['Number of Qubits', 'Number of ReUps', 'Embedding', 'Ansatz', 'Random Seed']
+    Returns:
+        model (torch.nn.Module)
+    """
     num_qubits = hyperparameter_dict['Number of Qubits']
     num_reups = hyperparameter_dict['Number of ReUps']
     
@@ -83,6 +87,19 @@ def build_model_from_hyperparameter_dict(hyperparameter_dict):
     return model
 
 def preprocess_data(dataset, classes, n_features, n_train, n_test):
+    """
+    Preprocess data for binary classification.
+    
+    Args:
+        dataset (str): 'mnist'/'kmnist'/'fashion'
+        classes (list[int]): classes used for binary classification
+        n_features (int): number of principal components to keep
+        n_train: number of training samples
+        n_test: number of testing samples
+
+    Returns:
+        train_x, train_y, test_x, test_y
+    """
     if dataset == 'mnist':
         train_ds = MNIST(root = './', train = True, download=True)
         test_ds = MNIST(root = './', train = False, download=True)
@@ -145,6 +162,19 @@ def preprocess_data(dataset, classes, n_features, n_train, n_test):
     return train_x, train_y, test_x, test_y
 
 def train(x_train, y_train, lr, batchsize, qlayer, save_path, seed, convergence_interval = 500):
+    """
+    Train model
+
+    Args:
+        x_train: train data
+        y_train: train labels
+        lr: learning rate
+        batchsize: batch size
+        qlayer: model to train
+        save_path: path to save checkpoints and other data
+        seed: random seed
+        convergence_interval: number of minibatch updates to use for convergence check
+    """
     # Set random seeds
     torch.manual_seed(seed)
     random.seed(seed)
@@ -186,6 +216,17 @@ def train(x_train, y_train, lr, batchsize, qlayer, save_path, seed, convergence_
             step += 1
 
 def score_and_margins(model, X, y):
+    """
+    Test trained models
+    
+    Args:
+        model (torch.nn.Module): trained model
+        X: test data
+        y: test labels
+
+    Returns:
+        accuracy, margin distribution, margin boxplot, margin mean
+    """
     correct_predictions = 0
     margin_dists = []
 

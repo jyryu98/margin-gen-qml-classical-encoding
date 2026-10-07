@@ -29,10 +29,12 @@ Python 3.13 was used for the paper experiments.
 
 ### Analysis (`./analysis/`)
 
-- `/se_test/`, `/ci_test/`: Contains test results shown in the paper
+- `/se_test/`, `/ci_test/`, `/bootstrap/`: Contains test results shown in the paper
 
 - `se_test.py`/`ci_test.py`: Calculates sign-errors/conditional independence tests
 
 - `composite_optimize.py`: Optimizes composite measure inspired by the derived bound in the paper
 
 - `extra_measures_test.py`: Calculates sign-errors/conditional independence tests for extra complexity measures guided by derived bounds
+
+- `bootstrap_k.py`, `bootstrap_se_q90.py`: Bootstrapping for conditional independence test / sign-errors

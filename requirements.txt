@@ -1,0 +1,11 @@
+jupyter_client==8.6.3
+jupyter_core==5.8.1
+matplotlib==3.10.6
+numpy==2.3.3
+pandas==2.3.2
+pennylane==0.42.3
+pyarrow==25.0.1
+scikit-learn==1.7.2
+scipy==1.16.1
+torch==2.8.0
+torchvision==0.23.0

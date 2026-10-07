@@ -121,7 +121,7 @@ def hpwise_sign_error(results_df, hyperparameter_name, complexity_measure, test_
 
 if __name__ == '__main__':
 
-    results = pd.read_csv('./results_summary.csv')
+    results = pd.read_csv('../results_summary.csv')
     results['train_margin_median'] = results['train_margin_dist'].apply(lambda x: np.median(literal_eval(x)))
 
     complexity_measures = [lambda x: np.sqrt(x['Number of Qubits'])/x['train_margin_median'],

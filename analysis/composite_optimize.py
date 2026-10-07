@@ -123,7 +123,7 @@ def sign_error_with_dataset_without_ansatz_num_qubits(results_df, complexity_mea
 
 if __name__ == '__main__':
 
-    results = pd.read_csv('./results_summary.csv')
+    results = pd.read_csv('../results_summary.csv')
     results['train_margin_median'] = results['train_margin_dist'].apply(lambda x: np.median(literal_eval(x)))
 
     # Common c

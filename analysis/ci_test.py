@@ -120,7 +120,7 @@ def entropy_g(table):
     return -np.sum(p_g[mask] * np.log(p_g[mask]))
 
 if __name__ == "__main__":
-    total_results = pd.read_csv('./results_summary.csv')
+    total_results = pd.read_csv('../results_summary.csv')
     total_results['train_margin_median'] = total_results['train_margin_dist'].apply(lambda x: np.median(literal_eval(x)))
 
     # Calculate Complexity Measures

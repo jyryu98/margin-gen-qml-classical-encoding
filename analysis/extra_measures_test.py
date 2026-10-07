@@ -73,7 +73,7 @@ SE_HP_ORDER = ['Embedding', 'Ansatz', 'Number of ReUps', 'Number of Qubits',
                'Batch Size', 'Learning Rate', 'Dataset']
 COMMON_HPS = ['Ansatz', 'Number of ReUps', 'Number of Qubits']
 
-CSV_PATH = './results_summary.csv'
+CSV_PATH = '../results_summary.csv'
 CACHE_PATH = os.environ.get('EXTRA_CACHE', './extra_measures_cache.parquet')
 
 # c for the paper's composite sqrt(nq)/mm + c*sqrt(np); 0.075 is the argmin of

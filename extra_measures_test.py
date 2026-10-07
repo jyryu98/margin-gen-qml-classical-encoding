@@ -79,6 +79,8 @@ CACHE_PATH = os.environ.get('EXTRA_CACHE', './extra_measures_cache.parquet')
 # c for the paper's composite sqrt(nq)/mm + c*sqrt(np); 0.075 is the argmin of
 # the global 90th-percentile sign-error over the paper's grid (reproduces 0.7118).
 COMPOSITE_C = 0.075
+with open('./se_test/c_lookup_table.json', 'r') as f:
+    CLOOKUP_TABLE = json.load(f)
 
 
 # --------------------------------------------------------------------------- #
@@ -116,6 +118,12 @@ def build_measures(df):
     nq = df['Number of Qubits'].to_numpy(float)
     npar = df['Number of Params'].to_numpy(float)
 
+    composite_A_nq = np.zeros(len(nq))
+    for ansatz in HYPERPARAMETER_VALUES['Ansatz']:
+        for num_qubits in HYPERPARAMETER_VALUES['Number of Qubits']:
+            mask = (df['Ansatz'] == ansatz) & (df['Number of Qubits'] == num_qubits)
+            composite_A_nq[mask] = nq[mask]/med[mask] + CLOOKUP_TABLE[ansatz+'_{}Q'.format(num_qubits)] * np.sqrt(npar[mask])
+
     with np.errstate(divide='ignore', invalid='ignore'):
         measures = {
             # ---- 5 originals (indices 0..4 map to cmi.json '0'..'4') ----
@@ -126,6 +134,7 @@ def build_measures(df):
             'np':               npar,
             # ---- composite from the paper ----
             f'sqrt(nq)/mm+{COMPOSITE_C}sqrt(np)': np.sqrt(nq) / med + COMPOSITE_C * np.sqrt(npar),
+            'sqrt(nq)/mm+c_A_nq*sqrt(np)': composite_A_nq,
             # ---- 4 new variants ----
             'np*ln(1/mm)[med]':  npar * np.log(1.0 / med),
             'np*ln(np/mm)[med]': npar * np.log(npar / med),
@@ -397,6 +406,7 @@ def report(ks, se_lists, meta, names):
     print('-- composite (c=%.3f) --' % COMPOSITE_C)
     comp = [n for n in names if n.startswith('sqrt(nq)/mm+')][0]
     line(comp, label='sqrt(nq)/mm+c*sqrt(np)')
+    line('sqrt(nq)/mm+c_A_nq*sqrt(np)')
     print('-- 4 new variants --')
     for n in NEW_NAMES:
         line(n)

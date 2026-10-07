@@ -11,7 +11,7 @@ Trains quantum machine learning models with classical data encoding across a gri
 
 - `train.py`: Performs training runs, saving results in `./Fashion4v9`, `./KMNIST0v5`, `./MNIST1v6`
 
-- `score_and_margins.py`: Takes trained models and calculates test accuracies/margins
+- `score_and_margins.py`: Takes trained models and scores accuracies/margins
 
 - `summarize_results.py`: Summarizes training and testing results into a csv file
 

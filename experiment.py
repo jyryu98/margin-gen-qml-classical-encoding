@@ -217,12 +217,12 @@ def train(x_train, y_train, lr, batchsize, qlayer, save_path, seed, convergence_
 
 def score_and_margins(model, X, y):
     """
-    Test trained models
+    Score traied models
     
     Args:
         model (torch.nn.Module): trained model
-        X: test data
-        y: test labels
+        X: train data
+        y: train labels
 
     Returns:
         accuracy, margin distribution, margin boxplot, margin mean

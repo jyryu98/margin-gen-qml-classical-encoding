@@ -52,11 +52,11 @@ def sign_error_with_dataset(results_df, complexity_measure, test_size, threshold
                             G_w2 = env2_result['Generalization Gap']
                             C_w1 = complexity_measure(env1_result)
                             C_w2 = complexity_measure(env2_result)
-                            if C_w1 != C_w2:
-                                epsilon = (G_w1-G_w2)/2####################################################
+                            if C_w1 != C_w2: # Cases where complexities are the same are removed due to a large fraction being present
+                                epsilon = (G_w1-G_w2)/2
                                 k = np.max([0, (1-2*np.exp(-2*test_size*epsilon**2))**2-0.5])
                                 ks.append(k)
-                                se += 0.5*k*(1-np.sign(G_w1-G_w2)*np.sign(C_w1-C_w2))######################
+                                se += 0.5*k*(1-np.sign(G_w1-G_w2)*np.sign(C_w1-C_w2))
                     if np.sum(ks) != 0:
                         se = se / np.sum(ks)
                         neff = np.sum(ks)**2/np.sum(np.square(ks))
@@ -109,11 +109,11 @@ def sign_error_with_dataset_without_ansatz_num_qubits(results_df, complexity_mea
                             G_w2 = env2_result['Generalization Gap']
                             C_w1 = complexity_measure(env1_result)
                             C_w2 = complexity_measure(env2_result)
-                            if C_w1 != C_w2:
-                                epsilon = (G_w1-G_w2)/2####################################################
+                            if C_w1 != C_w2: # Cases where complexities are the same are removed due to a large fraction being present
+                                epsilon = (G_w1-G_w2)/2
                                 k = np.max([0, (1-2*np.exp(-2*test_size*epsilon**2))**2-0.5])
                                 ks.append(k)
-                                se += 0.5*k*(1-np.sign(G_w1-G_w2)*np.sign(C_w1-C_w2))######################
+                                se += 0.5*k*(1-np.sign(G_w1-G_w2)*np.sign(C_w1-C_w2))
                     if np.sum(ks) != 0:
                         se = se / np.sum(ks)
                         neff = np.sum(ks)**2/np.sum(np.square(ks))

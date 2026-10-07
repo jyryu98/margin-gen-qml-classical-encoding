@@ -182,7 +182,7 @@ if __name__ == "__main__":
                     # compared with itself:
                     #
                     if a_value == b_value:
-                        table[1, 1] -= len(A)
+                        table[1, 1] -= len(A["g"])
     
                     I_sum[k] += mutual_information(table)
                     H_sum[k] += entropy_g(table)
@@ -252,7 +252,7 @@ if __name__ == "__main__":
 
                 # Remove i == j self-comparisons
                 if a_value == b_value:
-                    table[1, 1] -= len(A)
+                    table[1, 1] -= len(A["g"])
 
                 I_sum[k] += mutual_information(table)
                 H_sum[k] += entropy_g(table)
